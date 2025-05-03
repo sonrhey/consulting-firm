@@ -1,12 +1,14 @@
 <template>
   <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
     <!-- Navigation -->
-    <nav class="bg-white/80 backdrop-blur-md fixed w-full z-50 border-b border-gray-100 transition-all duration-300">
+    <nav class="bg-white/80 backdrop-blur-md fixed w-full z-50 border-b border-green-100 transition-all duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
           <div class="flex">
             <div class="flex-shrink-0 flex items-center">
-              <span class="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent hover-lift">EFT Octaris</span>
+              <router-link to="/">
+                <img src="/images/EFT OCTARIS _ BLACK.png" alt="EFT Octaris Logo" class="h-16 w-auto hover-lift" />
+              </router-link>
             </div>
             <div class="hidden sm:ml-10 sm:flex sm:space-x-8">
               <router-link
@@ -16,8 +18,8 @@
                 class="inline-flex items-center px-1 pt-1 text-sm font-medium transition-all duration-300 ease-out hover-lift"
                 :class="[
                   $route.path === item.href
-                    ? 'text-primary-600 border-b-2 border-primary-500'
-                    : 'text-gray-500 hover:text-gray-900 hover:border-gray-300'
+                    ? 'text-green-700 border-b-2 border-green-600'
+                    : 'text-gray-500 hover:text-green-900 hover:border-green-300'
                 ]"
               >
                 {{ t(`nav.${item.key}`) }}
@@ -25,11 +27,20 @@
             </div>
           </div>
           <div class="flex items-center space-x-4">
+            <!-- Theme Switcher -->
+            <button
+              @click="toggleTheme"
+              class="p-2 rounded-lg text-gray-500 hover:text-green-900 dark:hover:text-green-100 hover:bg-green-100 dark:hover:bg-green-700 transition-colors duration-300"
+              :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+            >
+              <SunIcon v-if="isDark" class="h-5 w-5" />
+              <MoonIcon v-else class="h-5 w-5" />
+            </button>
             <!-- Language Switcher -->
             <div class="relative">
               <button
                 @click="isLanguageOpen = !isLanguageOpen"
-                class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 focus:outline-none transition-all duration-300 ease-out rounded-md px-2 py-1 hover:bg-gray-50"
+                class="flex items-center text-sm font-medium text-gray-500 hover:text-green-900 focus:outline-none transition-all duration-300 ease-out rounded-md px-2 py-1 hover:bg-green-50"
               >
                 <flag :iso="currentLanguage === 'en' ? 'us' : 'es'" class="mr-2 rounded-sm h-4" />
                 <span class="mr-1">{{ currentLanguage === 'en' ? 'English' : 'Español' }}</span>
@@ -58,14 +69,14 @@
                       v-for="lang in languages"
                       :key="lang.code"
                       @click="setLanguage(lang.code); isLanguageOpen = false"
-                      class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200"
-                      :class="{ 'bg-gray-100': currentLanguage === lang.code }"
+                      class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-green-100 hover:text-green-900 transition-all duration-200"
+                      :class="{ 'bg-green-100': currentLanguage === lang.code }"
                     >
                       <flag :iso="lang.flag" class="mr-2 rounded-sm h-4" />
                       <span>{{ lang.name }}</span>
                       <CheckIcon
                         v-if="currentLanguage === lang.code"
-                        class="h-4 w-4 ml-auto text-primary-600"
+                        class="h-4 w-4 ml-auto text-green-600"
                         aria-hidden="true"
                       />
                     </button>
@@ -75,7 +86,7 @@
             </div>
             <router-link
               to="/contact"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 ease-out hover-lift"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-to-r from-green-700 to-green-500 hover:from-green-800 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300 ease-out hover-lift"
             >
               {{ t('nav.getStarted') }}
             </router-link>
@@ -100,46 +111,73 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-100">
+    <footer class="bg-white border-t border-green-100">
       <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div class="col-span-1 md:col-span-2">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4 hover-lift">EFT Octaris</h3>
+            <h3 class="text-lg font-semibold text-green-900 mb-4 hover-lift">EFT Octaris</h3>
             <p class="text-gray-500 max-w-md">
               {{ t('home.hero.description') }}
             </p>
           </div>
           <div>
-            <h4 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">{{ t('nav.quickLinks') }}</h4>
+            <h4 class="text-sm font-semibold text-green-900 tracking-wider uppercase mb-4">{{ t('nav.quickLinks') }}</h4>
             <ul class="space-y-3">
               <li v-for="item in navigation" :key="item.name">
-                <router-link :to="item.href" class="text-gray-500 hover:text-primary-600 transition-all duration-300 ease-out hover-lift inline-block">
+                <router-link :to="item.href" class="text-gray-500 hover:text-green-700 transition-all duration-300 ease-out hover-lift inline-block">
                   {{ t(`nav.${item.key}`) }}
                 </router-link>
               </li>
             </ul>
           </div>
           <div>
-            <h4 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">{{ t('nav.connect') }}</h4>
+            <h4 class="text-sm font-semibold text-green-900 tracking-wider uppercase mb-4">{{ t('nav.connect') }}</h4>
             <div class="flex space-x-6">
-              <a href="#" class="text-gray-400 hover:text-primary-600 transition-all duration-300 ease-out hover-lift">
+              <a href="https://www.linkedin.com/in/carr8824/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-green-700 transition-all duration-300 ease-out hover-lift">
                 <span class="sr-only">LinkedIn</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
               </a>
-              <a href="#" class="text-gray-400 hover:text-primary-600 transition-all duration-300 ease-out hover-lift">
-                <span class="sr-only">Twitter</span>
+              <a href="https://www.instagram.com/eftoctaris/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-green-700 transition-all duration-300 ease-out hover-lift">
+                <span class="sr-only">Instagram</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <a href="https://www.tiktok.com/@eftoctaris" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-green-700 transition-all duration-300 ease-out hover-lift">
+                <span class="sr-only">TikTok</span>
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                </svg>
+              </a>
+              <a href="https://www.youtube.com/@carr8824" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-green-700 transition-all duration-300 ease-out hover-lift">
+                <span class="sr-only">YouTube</span>
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
             </div>
+            <div class="mt-6">
+              <h4 class="text-sm font-semibold text-green-900 tracking-wider uppercase mb-4">Blogs</h4>
+              <ul class="space-y-3">
+                <li>
+                  <a href="https://eftoctaris.com/2025/04/09/%f0%9f%9a%a8-como-afectan-realmente-los-nuevos-aranceles-de-trump-a-tu-pyme-o-negocio-autonomo-%f0%9f%92%bc%f0%9f%8c%8e/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-green-700 transition-all duration-300 ease-out hover-lift inline-block">
+                    Economy
+                  </a>
+                </li>
+                <li>
+                  <a href="https://eftoctaris.com/2025/04/21/universidades-desconectadas-o-lideres-del-cambio/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-green-700 transition-all duration-300 ease-out hover-lift inline-block">
+                    Technology
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="mt-8 border-t border-gray-100 pt-8 md:flex md:items-center md:justify-between">
+        <div class="mt-8 border-t border-green-100 pt-8 md:flex md:items-center md:justify-between">
           <p class="text-base text-gray-400">
-            &copy; 2024 EFT Octaris. {{ t('nav.allRightsReserved') }}
+            &copy; 2025 EFT Octaris. {{ t('nav.allRightsReserved') }}
           </p>
         </div>
       </div>

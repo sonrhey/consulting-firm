@@ -5,16 +5,16 @@
 @import './transitions.css';
 
 :root {
-  --primary-50: #f0f9ff;
-  --primary-100: #e0f2fe;
-  --primary-200: #bae6fd;
-  --primary-300: #7dd3fc;
-  --primary-400: #38bdf8;
-  --primary-500: #0ea5e9;
-  --primary-600: #0284c7;
-  --primary-700: #0369a1;
-  --primary-800: #075985;
-  --primary-900: #0c4a6e;
+  --primary-50: #e8f5e9;
+  --primary-100: #c8e6c9;
+  --primary-200: #a5d6a7;
+  --primary-300: #81c784;
+  --primary-400: #388e3c;
+  --primary-500: #1B5E20;
+  --primary-600: #174f1c;
+  --primary-700: #124016;
+  --primary-800: #0d2e10;
+  --primary-900: #081b08;
 }
 
 /* Base styles */
@@ -22,12 +22,54 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #ffffff;
+  color: #111827;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark mode styles */
+.dark body {
+  background-color: #111827;
+  color: #f3f4f6;
+}
+
+.dark .bg-white {
+  background-color: #1f2937;
+}
+
+.dark .text-gray-500 {
+  color: #9ca3af;
+}
+
+.dark .text-gray-900 {
+  color: #f3f4f6;
+}
+
+.dark .border-gray-100 {
+  border-color: #374151;
+}
+
+.dark .bg-gray-50 {
+  background-color: #1f2937;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  background-color: #374151;
+}
+
+.dark .bg-gray-100 {
+  background-color: #374151;
+}
+
+.dark .text-gray-400 {
+  color: #9ca3af;
 }
 
 /* Custom utilities */
 .bg-gradient {
   background-size: 200% 200%;
   animation: gradientFlow 6s ease infinite;
+  background-image: linear-gradient(90deg, var(--primary-500), var(--primary-400), var(--primary-600));
 }
 
 @layer base {
@@ -38,10 +80,19 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white;
+    background-color: var(--primary-500);
+  }
+  .btn-primary:hover {
+    background-color: var(--primary-600);
   }
   
   .btn-secondary {
-    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md;
+    color: var(--primary-700);
+    background-color: var(--primary-100);
+  }
+  .btn-secondary:hover {
+    background-color: var(--primary-200);
   }
 } 
